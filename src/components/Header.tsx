@@ -1,39 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { ReactComponent as Hamburger } from "../asset/icons/bars-solid.svg";
+import { media } from "../styles/theme";
 
 const Header = () => {
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
   return (
     <Navigation>
       <a href="/" className="brand-name">
-        MacroSoft
+        Shopping
       </a>
-      <button className="hamburger">
-        {/* icon from heroicons.com */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="white">
-          <path
-            fillRule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-            clipRule="evenodd"
-          />
-        </svg>
+      <button
+        className="hamburger"
+        onClick={() => {
+          setIsNavExpanded(!isNavExpanded);
+        }}>
+        <Hamburger />
       </button>
-      <div className="navigation-menu">
-        <ul>
-          <li>
-            <a href="/home">Home</a>
+      <Menues className={isNavExpanded ? "expanded" : "navigation-menu"}>
+        <ul className="menu-list">
+          <li className="menu-list__menu">
+            <a href="/home" className="menu-list__menu__url">
+              Home
+            </a>
           </li>
-          <li>
-            <a href="/about">About</a>
+          <li className="menu-list__menu">
+            <a href="/about" className="menu-list__menu__url">
+              Shop
+            </a>
           </li>
-          <li>
-            <a href="/contact">Contact</a>
+          <li className="menu-list__menu">
+            <a href="/contact" className="menu-list__menu__url">
+              Cart
+            </a>
           </li>
         </ul>
-      </div>
+      </Menues>
     </Navigation>
   );
 };
@@ -49,26 +52,14 @@ const Navigation = styled.nav`
   color: black;
   box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
 
-  @media screen and (max-width: 768px) {
-    .hamburger {
-      display: block;
-    }
-    .navigation-menu ul {
-      display: none;
-    }
-  }
-
   .brand-name {
     text-decoration: none;
     color: black;
     font-size: 1.3rem;
     margin-left: 1rem;
   }
-  .navigation-menu {
-    margin-left: auto;
-  }
+
   .hamburger {
-    // removes default border on button element
     border: 0;
     height: 40px;
     width: 40px;
@@ -77,15 +68,76 @@ const Navigation = styled.nav`
     background-color: #283b8b;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
-    // positions the icon to the right and center aligns it vertically
+
     position: absolute;
     top: 50%;
     right: 25px;
     transform: translateY(-50%);
     display: none;
+
+    ${media.mobile} {
+      display: block;
+    }
+
+    &:hover {
+      background-color: #2642af;
+    }
   }
-  .hamburger:hover {
-    background-color: #2642af;
+`;
+
+const Menues = styled.div`
+  margin-left: auto;
+
+  ${media.mobile} {
+    display: none;
+
+    &:expanded {
+      display: block;
+    }
+  }
+
+  .menu-list {
+    display: flex;
+    padding: 0;
+
+    ${media.mobile} {
+      position: absolute;
+      top: 60px;
+      left: 0;
+
+      flex-direction: column;
+
+      width: 100%;
+      height: calc(100vh - 77px);
+      background-color: white;
+      border-top: 1px solid black;
+
+      &__menu {
+        text-align: center;
+        margin: 0;
+
+        &::hover {
+          background-color: #eee;
+        }
+
+        &__url {
+          color: black;
+          width: 100%;
+          padding: 1.5rem 0;
+        }
+      }
+    }
+
+    &__menu {
+      list-style-type: none;
+      margin: 0 1rem;
+
+      &__url {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+      }
+    }
   }
 `;
 
