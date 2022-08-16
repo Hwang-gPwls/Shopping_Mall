@@ -1,12 +1,18 @@
 import React from "react";
-import Main from "./Pages/Main";
+import Main from "./pages/Main";
+import Detail from "./pages/Detail";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Main />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="*" element={<div>없는 페이지</div>}></Route>
+      </Routes>
     </ThemeProvider>
   );
 }
