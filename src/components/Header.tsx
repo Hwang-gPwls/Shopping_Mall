@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Hamburger } from "../asset/icons/bars-solid.svg";
 import { media } from "../styles/theme";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const navigation = useNavigate();
 
   return (
     <Navigation>
@@ -31,8 +33,12 @@ const Header = () => {
             </a>
           </li>
           <li className="menu-list__menu">
-            <a href="/contact" className="menu-list__menu__url">
-              Cart
+            <a
+              className="menu-list__menu__url"
+              onClick={() => {
+                navigation("/detail");
+              }}>
+              Detail
             </a>
           </li>
         </ul>
